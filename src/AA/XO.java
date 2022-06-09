@@ -100,7 +100,6 @@ public class XO {
         }
         if (map[0][2] == symbol && map[1][2] == symbol && map[2][2] == symbol) {
             return true;
-
         }
         if (map[0][0] == symbol && map[1][1] == symbol && map[2][2] == symbol) {
             return true;
@@ -114,14 +113,20 @@ public class XO {
     public static void main(String[] args) {
         initMap();
         printMap();
-        humanTurn();
-
-        initMap();
-        printMap();
-        humanTurn();
-
-        initMap();
-        humanTurn();
-        printMap();
+        while (true){
+            humanTurn();
+            printMap();
+            if (checkWin(DOT_X)){
+                System.out.println("Побеждает человек");
+                break;
+            }
+            aiTern();
+            printMap();
+            if (checkWin(DOT_O)){
+                System.out.println("Робот победил");
+                break;
+            }
+        }
+        System.out.println("Игра окончена");
     }
 }
