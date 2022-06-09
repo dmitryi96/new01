@@ -1,17 +1,11 @@
 package AA;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class XO {
-    public static void main(String[] args) {
-        initMap();
-        printMap();
-        humanTurn();
-        printMap();
-        humanTurn();
-        printMap();
-    }
+
 
     //поле
     public static char[][] map;
@@ -27,6 +21,7 @@ public class XO {
     //Сканер
     public static final Scanner SCANNER = new Scanner(System.in);
 
+    public static final Random RANDOM = new Random();
 
     public static void initMap() {
         map = new char[SIZE][SIZE];
@@ -58,13 +53,23 @@ public class XO {
     public static void humanTurn() {
         int x, y;
         do {
-            System.out.println("Ввкдите координаты  X  Y");
+            System.out.println("enter   X  Y");
             x = SCANNER.nextInt() - 1;
             y = SCANNER.nextInt() - 1;
         } while (!isCellValid(x, y));
         map[y][x] = DOT_X;
     }
 
+
+    public static void aiTern() {
+        int x, y;
+        do {
+            x = RANDOM.nextInt(SIZE);
+            y = RANDOM.nextInt(SIZE);
+        } while (!isCellValid(x, y));
+        System.out.println("Робот делает ход в " + (x + 1) + " " + (y + 1));
+        map[y][x] = DOT_O;
+    }
 
     public static boolean isCellValid(int x, int y) {
         if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
@@ -74,5 +79,49 @@ public class XO {
             return false;
         }
         return true;
+    }
+
+
+    public static boolean checkWin(char symbol) {
+        if (map[0][0] == symbol && map[0][1] == symbol && map[0][2] == symbol) {
+            return true;
+        }
+        if (map[1][0] == symbol && map[1][1] == symbol && map[1][2] == symbol) {
+            return true;
+        }
+        if (map[2][0] == symbol && map[2][1] == symbol && map[2][2] == symbol) {
+            return true;
+        }
+        if (map[0][0] == symbol && map[1][0] == symbol && map[2][0] == symbol) {
+            return true;
+        }
+        if (map[0][1] == symbol && map[1][1] == symbol && map[2][1] == symbol) {
+            return true;
+        }
+        if (map[0][2] == symbol && map[1][2] == symbol && map[2][2] == symbol) {
+            return true;
+
+        }
+        if (map[0][0] == symbol && map[1][1] == symbol && map[2][2] == symbol) {
+            return true;
+        }
+        if (map[0][2] == symbol && map[1][1] == symbol && map[2][0] == symbol) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        initMap();
+        printMap();
+        humanTurn();
+
+        initMap();
+        printMap();
+        humanTurn();
+
+        initMap();
+        humanTurn();
+        printMap();
     }
 }
